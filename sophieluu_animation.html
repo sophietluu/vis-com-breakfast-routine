@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sophie's Breakfast Routine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@400;700&display=swap">
+<style>
+/*
+VOICE: playful and handmade, like a page from my sketchbook
+IDEA: the dotted notebook spread, colored in one step at a time
+PICTURE: three lanes (eggs, toast, avocado) that merge onto one plate
+COLOUR and TYPE: pencil gray on dot paper; food colors appear as each step happens; Architects Daughter + Nunito
+LAYOUT: title with goal plate, tools and ingredients shelf, controls with step card, process map
+*/
+:root{color-scheme:light;--bg:#fff;--dot:#e4e2dc;--ink:#1a1a1a;--pencil:#000;--soft:#6b6860;--card:#fff;--accent:#e0733c;
+--egg:#fff;--yolk:#fff;--scr:#fff;--bread:#fff;--toast:#fff;--avo:#fff;--skin:#fff;--pit:#fff;--butter:#fff;--pan:#fff;--metal:#fff;--plate:#fff;--bowl:#fff;--oven:#fff;--glow:#fff;--wood:#fff;--spat:#fff;--salt:#fff;--pepper:#fff;--hand:#fff;--flame:#fff;--carton:#fff;--check:var(--pencil)}
+.lit{--egg:#fffaf0;--yolk:#f6b928;--scr:#f7d35c;--bread:#f1dcae;--toast:#d29a52;--avo:#b5d16a;--skin:#3f6b2a;--pit:#8a5a2b;--butter:#f7e08a;--pan:#4a4a4a;--metal:#cfd4da;--plate:#fff;--bowl:#dfeaf3;--oven:#d5d9de;--glow:#f2a541;--wood:#b98a5a;--spat:#e07a5f;--salt:#f8f8f8;--pepper:#5a5a5a;--hand:#f2c9a5;--flame:#f28c28;--carton:#e8d9bd;--check:#3d9a50}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;color:var(--ink);font:16px/1.55 Nunito,system-ui,sans-serif;overflow-x:clip;background:#fff}
+.band{padding:clamp(18px,3vw,36px) max(4vw,16px);max-width:1240px;margin:auto}
+h1,h2,.hand{font-family:"Architects Daughter",cursive;font-weight:400}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{font-size:clamp(32px,4.8vw,50px);line-height:1.05;margin:0 0 6px;text-wrap:balance}
+.lede{margin:0;max-width:60ch;font-size:17px}
+.goal{display:flex;align-items:center;gap:8px;font:20px "Architects Daughter",cursive}
+.goal svg{width:120px;height:100px}
+.sym *{stroke:var(--pencil);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;transition:fill .6s}
+.n{fill:none}.f-egg{fill:var(--egg)}.f-yolk{fill:var(--yolk)}.f-scr{fill:var(--scr)}.f-bread{fill:var(--bread)}.f-toast{fill:var(--toast)}.f-avo{fill:var(--avo)}.f-skin{fill:var(--skin)}.f-pit{fill:var(--pit)}.f-butter{fill:var(--butter)}.f-pan{fill:var(--pan)}.f-metal{fill:var(--metal)}.f-plate{fill:var(--plate)}.f-bowl{fill:var(--bowl)}.f-oven{fill:var(--oven)}.f-glow{fill:var(--glow)}.f-wood{fill:var(--wood)}.f-spat{fill:var(--spat)}.f-salt{fill:var(--salt)}.f-pepper{fill:var(--pepper)}.f-hand{fill:var(--hand)}.f-flame{fill:var(--flame)}.f-carton{fill:var(--carton)}
+.shelf{display:flex;flex-wrap:wrap;gap:8px 28px;margin:18px 0 6px}
+.grp h2{font-size:20px;margin:0 0 4px;text-decoration:underline}
+.items{display:flex;flex-wrap:wrap;gap:4px}
+.item{width:82px;min-height:44px;padding:4px 2px;border:2px solid transparent;border-radius:3px;background:none;color:var(--ink);font:13px Nunito,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;transition:transform .3s,border-color .3s,background .3s}
+.item svg{width:50px;height:50px}
+.item.now{border-color:var(--accent);background:var(--card);transform:translateY(-4px)}
+.item.pick{border-style:dashed;border-color:var(--ink)}
+button:focus-visible,.item:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#find{min-height:27px}
+body{padding-bottom:70px}
+.pbar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #000;z-index:5}
+.pin{max-width:1240px;margin:auto;padding:10px max(4vw,16px) 14px}
+.cap{margin:0 0 8px;font-size:16px;min-height:26px}
+.cap .num{color:var(--soft);font-size:14px;margin-right:6px;white-space:nowrap}
+.cap b{font:400 21px "Architects Daughter",cursive;margin-right:6px}
+.track{position:relative;height:16px;border:2px solid #000;border-radius:10px;overflow:hidden;background:#fff}
+.fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent)}
+.ticks{position:absolute;inset:0;display:flex}.ticks i{flex:1;border-right:1.5px solid rgba(0,0,0,.35)}.ticks i:last-child{border:0}
+.sbtn{cursor:pointer}.sbtn rect{fill:var(--accent);stroke:#000;stroke-width:2}.sbtn text{font:700 18px Nunito,sans-serif;fill:#fff}
+.sbtn:hover rect{filter:brightness(1.08)}.sbtn:focus-visible{outline:3px solid #000}
+.map{overflow-x:auto;margin-top:14px}
+.map svg{display:block;width:100%;min-width:760px;height:auto}
+.node .art{transition:opacity .5s;transform-box:fill-box;transform-origin:center}
+.node:not(.lit) .art{opacity:.55}
+.node.now .art{animation:pop .55s cubic-bezier(.3,1.6,.5,1)}
+.frame{fill:transparent;stroke:transparent;stroke-width:2.5;transition:stroke .3s,fill .3s}
+.shd{fill:#ededed;opacity:0;transition:opacity .35s}.shd.now{opacity:1}
+.frame.hl{stroke:var(--ink);stroke-dasharray:7 6}
+.lbl{font:17px "Architects Daughter",cursive;fill:var(--ink)}
+.lane{font:25px "Architects Daughter",cursive;fill:var(--soft);text-decoration:underline}
+.edge{fill:none;stroke:var(--pencil);stroke-width:2.4;opacity:.22;transition:opacity .3s}
+.edge.on{opacity:1;stroke-dasharray:1;animation:draw .8s ease both}
+.fkg{transition:opacity .3s}
+.shk{transform-box:fill-box;transform-origin:50% 40%}
+.mult{font:20px "Architects Daughter",cursive;fill:var(--accent);font-weight:700}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes pop{0%{transform:scale(.82)}60%{transform:scale(1.07)}100%{transform:none}}
+@media (max-width:600px){.goal svg{width:96px;height:80px}.cap span#sd{display:block}}
+@media (prefers-reduced-motion:reduce){.node.now .art,.edge.on{animation:none}.sym *,.item{transition:none}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="plate" class="sym" viewBox="0 0 100 100"><circle class="f-plate" cx="50" cy="50" r="46"/><circle class="n" cx="50" cy="50" r="37"/></symbol>
+<symbol id="fork" class="sym" viewBox="0 0 100 100"><path class="f-metal" d="M40 6v22q0 12 10 12t10-12V6"/><path class="n" d="M46.5 6v22M53.5 6v22"/><rect class="f-metal" x="46" y="40" width="8" height="56" rx="4"/></symbol>
+<symbol id="bknife" class="sym" viewBox="0 0 100 100"><path class="f-metal" d="M47 4q12 14 9 52H46z"/><rect class="f-metal" x="45" y="56" width="11" height="40" rx="5"/></symbol>
+<symbol id="cknife" class="sym" viewBox="0 0 100 100"><path class="f-metal" d="M42 4q22 18 16 56H42z"/><rect class="f-wood" x="41" y="60" width="17" height="36" rx="4"/></symbol>
+<symbol id="spat" class="sym" viewBox="0 0 100 100"><rect class="f-spat" x="33" y="4" width="34" height="40" rx="9"/><rect class="f-wood" x="45" y="44" width="10" height="52" rx="4"/></symbol>
+<symbol id="pan" class="sym" viewBox="0 0 100 100"><path class="f-wood" d="M66 70l7-7 24 24q2 9-7 8z"/><circle class="f-pan" cx="42" cy="42" r="38"/><circle class="n" cx="42" cy="42" r="30"/></symbol>
+<symbol id="bowl" class="sym" viewBox="0 0 100 100"><path class="f-bowl" d="M8 38h84q-2 50-42 52Q10 88 8 38z"/><ellipse class="f-bowl" cx="50" cy="38" rx="42" ry="9"/></symbol>
+<symbol id="oven" class="sym" viewBox="0 0 100 100"><rect class="f-oven" x="4" y="20" width="92" height="62" rx="7"/><rect class="f-glow" x="12" y="30" width="58" height="42" rx="3"/><path class="n" d="M12 44h58M12 58h58M76 48h13M76 53h13M12 82v6M88 82v6"/><rect class="n" x="76" y="30" width="13" height="10" rx="2"/><circle class="f-metal" cx="82" cy="67" r="5"/></symbol>
+<symbol id="eggs" class="sym" viewBox="0 0 100 100"><ellipse class="f-egg" cx="24" cy="52" rx="10" ry="13"/><ellipse class="f-egg" cx="42" cy="52" rx="10" ry="13"/><ellipse class="f-egg" cx="60" cy="52" rx="10" ry="13"/><ellipse class="f-egg" cx="78" cy="52" rx="10" ry="13"/><path class="f-carton" d="M6 56h88l-6 28H12z"/></symbol>
+<symbol id="salt" class="sym" viewBox="0 0 100 100"><path class="f-salt" d="M34 34q0-12 16-12t16 12l6 58H28z"/><rect class="f-metal" x="36" y="8" width="28" height="16" rx="7"/></symbol>
+<symbol id="pepper" class="sym" viewBox="0 0 100 100"><path class="f-pepper" d="M34 34q0-12 16-12t16 12l6 58H28z"/><rect class="f-metal" x="36" y="8" width="28" height="16" rx="7"/></symbol>
+<symbol id="butter" class="sym" viewBox="0 0 100 100"><path class="f-butter" d="M8 50l52-16 32 10-52 17z"/><path class="f-butter" d="M8 50v16l32 12V61zM40 61l52-17v15L40 78z"/><path class="n" d="M14 60l20 8"/></symbol>
+<symbol id="bread" class="sym" viewBox="0 0 100 100"><path class="f-bread" d="M22 92V44q-12-4-10-16Q16 10 50 10t38 18q2 12-10 16v48z"/></symbol>
+<symbol id="toast" class="sym" viewBox="0 0 100 100"><path class="f-toast" d="M22 92V44q-12-4-10-16Q16 10 50 10t38 18q2 12-10 16v48z"/><path class="n" d="M30 84V48q-9-3-8-12 3-14 28-14t28 14q1 9-8 12v36z" opacity=".5"/></symbol>
+<symbol id="avo" class="sym" viewBox="0 0 100 100"><path class="f-skin" d="M50 6q20 0 24 34 18 20 8 40-10 16-32 16T18 80Q8 60 26 40 30 6 50 6z"/><path class="f-avo" d="M50 15q14 0 17 29 15 17 7 33-8 13-24 13T26 77q-8-16 7-33 3-29 17-29z"/><circle class="f-pit" cx="50" cy="64" r="13"/></symbol>
+<symbol id="avohalf" class="sym" viewBox="0 0 100 100"><path class="f-skin" d="M50 6q20 0 24 34 18 20 8 40-10 16-32 16T18 80Q8 60 26 40 30 6 50 6z"/><path class="f-avo" d="M50 15q14 0 17 29 15 17 7 33-8 13-24 13T26 77q-8-16 7-33 3-29 17-29z"/><circle class="n" cx="50" cy="64" r="12"/></symbol>
+<symbol id="chunks" class="sym" viewBox="0 0 100 100"><path class="f-avo" d="M10 50l14-8 10 12-12 8zM36 40l16-4 6 14-16 6zM60 46l14-6 10 12-14 8zM24 66l14-4 4 14-14 4zM48 62l16 2-2 14-14-2zM68 64l14-2 2 12-14 4z"/></symbol>
+<symbol id="scr" class="sym" viewBox="0 0 100 100"><path class="f-scr" d="M14 52q-6-14 8-20 4-14 20-10 10-12 24-2 16-2 18 14 12 8 4 20 2 14-16 14-10 10-24 2-14 6-22-4-14 0-14-14z"/><path class="n" d="M28 44q6-6 12 0M50 38q6 4 10-2M40 62q6 4 12-2M64 56q4-6 10 0"/></symbol>
+<symbol id="raw" class="sym" viewBox="0 0 100 100"><path class="f-egg" d="M10 50q0-30 30-32 20-10 36 6 20 14 6 36-8 24-36 18Q8 76 10 50z"/><circle class="f-yolk" cx="46" cy="48" r="13"/></symbol>
+<symbol id="bowlfront" class="sym" viewBox="0 0 100 100"><path class="f-bowl" d="M8 38a42 9 0 0 0 84 0q-2 50-42 52Q10 88 8 38z"/></symbol>
+<symbol id="mash" class="sym" viewBox="0 0 100 100"><path class="f-avo" d="M12 62q2-26 22-30 8-12 20-8 14-6 24 6 12 6 12 32z"/><path class="n" d="M26 50q5-4 10 0M44 40q5 4 10 0M62 46q5-4 10 1M36 56q4 3 9 0M56 56q4-3 9 0"/></symbol>
+<symbol id="spread" class="sym" viewBox="0 0 100 100"><path class="f-avo" d="M24 42q-6-14 14-18 12-6 24 0 20 4 14 18 4 18 0 36-26 8-52 0-4-18 0-36z"/><path class="n" d="M34 42q5-4 10 0M54 36q5 4 10 0M40 58q5-4 10 0M58 56q4 3 9 0M44 72q5 3 10 0"/></symbol>
+<symbol id="avotoast" viewBox="0 0 100 100"><use href="#toast" width="100" height="100"/><use href="#spread" width="100" height="100"/></symbol>
+<symbol id="heat" class="sym" viewBox="0 0 100 100"><path class="f-flame" d="M20 90q-12-20 4-40 2 16 10 20 0-24 16-40 2 26 14 30 6-10 4-20 16 22 6 50z"/></symbol>
+<symbol id="timer" class="sym" viewBox="0 0 100 100"><circle class="f-plate" cx="50" cy="56" r="36"/><path class="n" d="M50 56V34M50 56l14 10M42 12h16M50 12v8"/></symbol>
+<symbol id="hand" class="sym" viewBox="0 0 100 100"><path class="f-hand" d="M37 90C35 80 33 72 32 66C26 61 19 54 15 48C12 42 18 37 23 41C27 44 30 49 33 53L33 22A4.5 4.5 0 0 1 42 22L42 46L42 16A4.5 4.5 0 0 1 51 16L51 46L51 20A4.5 4.5 0 0 1 60 20L60 48L60 32A4 4 0 0 1 68 32L68 60C68 74 66 82 65 90Z"/></symbol>
+<symbol id="check" viewBox="0 0 100 100"><path d="M12 52l24 26 52-58" fill="none" stroke="var(--check)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+<main class="band">
+<div class="top">
+ <div><h1>Sophie's breakfast routine</h1>
+ <p class="lede" id="find" aria-live="polite">Tap a tool or ingredient to see which steps use it.</p></div>
+ <div class="goal"><span>Goal</span><svg viewBox="0 0 120 100" aria-label="Goal: a plate of eggs and two avocado toasts"><g id="goalg"></g></svg></div>
+</div>
+<div class="shelf" id="shelf"></div>
+<div class="map"><svg id="m" viewBox="0 -60 1270 790" role="img" aria-label="Process map: eggs, toast and avocado steps merge onto the plate"></svg></div>
+</main>
+<div class="pbar"><div class="pin"><div class="track" role="progressbar" aria-label="Breakfast progress" aria-valuemin="0" aria-valuemax="13" id="trk"><div class="fill" id="fill"></div><div class="ticks" id="ticks"></div></div></div></div>
+<script>
+{
+const $=id=>document.getElementById(id);
+const u=(id,x,y,w)=>`<use href="#${id}" x="${x}" y="${y}" width="${w}" height="${w}"/>`;
+const pf=(x,y,s)=>u('plate',x,y,s)+u('scr',x+s*.1,y+s*.2,s*.44)+u('avotoast',x+s*.5,y+s*.1,s*.36)+u('avotoast',x+s*.42,y+s*.5,s*.36);
+const IT=[['pan','Pan',0],['spat','Spatula',0],['plate','Plate',0],['oven','Toaster oven',0],['bknife','Butter knife',0],['cknife','Chef knife',0],['bowl','Bowl',0],['fork','Fork',0],['eggs','Eggs',1],['bread','Bread',1],['butter','Butter',1],['avo','Avocado',1],['salt','Salt',1],['pepper','Pepper',1]];
+const NM=Object.fromEntries(IT.map(i=>[i[0],i[1]]));
+const S=[
+ ['Crack the eggs','Crack two eggs into the pan over the heat.',['pan','spat','eggs']],
+ ['Scramble','Stir the eggs with the spatula until they set.',['pan','spat','eggs']],
+ ['Plate the eggs','Slide the scrambled eggs onto the plate.',['plate','spat']],
+ ['Toast the bread','Put two slices of bread in the toaster oven and set the timer.',['oven','bread']],
+ ['Take out toast','Pull the toast out once it turns golden.',['oven']],
+ ['Butter','Spread butter on both slices with the butter knife.',['bknife','butter']],
+ ['Cut the avocado','Slice the avocado in half and take out the pit.',['cknife','avo']],
+ ['Mash it up','Scoop the avocado into the bowl and mash it with the fork.',['bowl','fork','avo']],
+ ['Top the toast','Spread the mashed avocado onto the buttered toast.',['bowl','bread','avo']],
+ ['Build the plate','Set both toasts on the plate next to the eggs.',['plate']],
+ ['Season','Shake salt over everything twice, then pepper four times.',['salt','pepper']],
+ ['Eat!','Fork for the eggs, hands for the toast. It is the same fork from the avocado bowl.',['fork','plate']],
+ ['Done','Just crumbs left on the plate.',['plate']]
+];
+const ART=[
+ u('heat',-34,4,66)+u('pan',-56,-62,106)+u('raw',-44,-48,34)+u('raw',-16,-40,34)+u('spat',22,-68,52),
+ u('heat',-34,4,66)+u('pan',-56,-62,106)+u('scr',-42,-46,56)+u('spat',22,-68,52),
+ u('plate',-52,-62,104)+u('scr',-30,-38,58),
+ u('bread',-68,-46,40)+u('bread',-54,-30,40)+u('oven',-16,-50,84)+u('timer',-64,16,32),
+ u('toast',-62,-50,62)+u('toast',-2,-50,62),
+ u('toast',-64,-46,58)+u('toast',-10,-46,58)+u('butter',-50,-28,28)+u('butter',4,-28,28)+u('bknife',24,-68,62),
+ u('avohalf',-64,-54,62)+u('avo',-18,-54,62)+u('cknife',26,-68,64),
+ u('bowl',-62,-40,96)+u('mash',-54,-42,80)+u('bowlfront',-62,-40,96)+`<g id="fk7" class="fkg">${u('fork',26,-70,62)}</g>`,
+ u('avotoast',-64,-52,64)+u('avotoast',-2,-52,64),
+ pf(-56,-62,112),
+ pf(-50,-46,100)+'<g class="grains" id="gs" opacity="0"><circle cx="-22" cy="-20" r="1.8" fill="#fff" stroke="#000" stroke-width=".8"/><circle cx="-16" cy="-12" r="1.8" fill="#fff" stroke="#000" stroke-width=".8"/><circle cx="-26" cy="-8" r="1.8" fill="#fff" stroke="#000" stroke-width=".8"/></g><g class="grains" id="gp" opacity="0"><circle cx="20" cy="-20" r="1.8" fill="#222"/><circle cx="14" cy="-12" r="1.8" fill="#222"/><circle cx="24" cy="-8" r="1.8" fill="#222"/></g>'+`<g id="shs" class="shk">${u('salt',-66,-72,42)}</g><g id="shp" class="shk">${u('pepper',26,-72,42)}</g>`+'<text class="mult" x="-45" y="-78" text-anchor="middle">2x</text><text class="mult" x="47" y="-78" text-anchor="middle">4x</text>',
+ pf(-58,-58,100)+`<g id="fk11" class="fkg">${u('fork',-90,-52,52)}</g>`+u('hand',42,-44,48),
+ u('plate',-52,-62,104)+'<g class="sym"><circle class="f-toast" cx="-8" cy="-14" r="3"/><circle class="f-toast" cx="4" cy="-6" r="2"/><circle class="f-scr" cx="10" cy="-18" r="2.5"/><circle class="f-avo" cx="-2" cy="4" r="2"/></g>'+u('check',40,-74,48)
+];
+const P=[[150,140],[320,140],[490,140],[150,350],[320,350],[490,350],[150,560],[320,560],[700,500],[700,240],[870,240],[1080,240],[870,500]];
+const E=[[0,1],[1,2],[3,4],[4,5],[6,7],[5,8],[7,8],[2,9],[8,9],[9,10],[10,11],[11,12]];
+// goal + shelf
+$('goalg').innerHTML=pf(22,4,92)+u('fork',-8,10,44);
+$('shelf').innerHTML=[['Tools',0],['Ingredients',1]].map(([t,g])=>`<div class="grp"><h2>${t}</h2><div class="items">${IT.filter(i=>i[2]==g).map(i=>`<button class="item" id="it-${i[0]}" data-k="${i[0]}"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#${i[0]}"/></svg>${i[1]}</button>`).join('')}</div></div>`).join('');
+// map
+const trim=(ux,uy,down)=>Math.min(Math.abs(ux)>.01?64/Math.abs(ux):1e9,Math.abs(uy)>.01?(down?102:72)/Math.abs(uy):1e9)+4;
+let h=`<defs><filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="12"/></filter><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 9 5 1 9" fill="none" stroke="var(--pencil)" stroke-width="1.6" stroke-linecap="round"/></marker></defs>`;
+h+=`<text class="lane" x="-90" y="${P[0][1]+8}">Eggs</text><text class="lane" x="-90" y="${P[3][1]+8}">Toast</text><text class="lane" x="-90" y="${P[6][1]+8}">Avocado</text>`;
+h+=S.map((s,i)=>`<rect class="shd" filter="url(#soft)" id="sh${i}" x="${P[i][0]-74}" y="${P[i][1]-74}" width="148" height="178" rx="4"/><rect class="frame" id="fr${i}" x="${P[i][0]-74}" y="${P[i][1]-74}" width="148" height="178" rx="4"/>`).join('');
+h+=E.map(([a,b],n)=>{const[x1,y1]=P[a],[x2,y2]=P[b],dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,r1=trim(ux,uy,uy>0),r2=trim(ux,uy,uy<0)+(b==11?30:0),sx=x1+ux*r1,sy=y1+uy*r1,ex=x2-ux*r2,ey=y2-uy*r2,mx=(sx+ex)/2-uy*16,my=(sy+ey)/2+ux*16;return `<path class="edge" id="ed${n}" pathLength="1" d="M${sx} ${sy}Q${mx} ${my} ${ex} ${ey}" marker-end="url(#ar)"/>`}).join('');
+h+=S.map((s,i)=>`<g class="node" id="n${i}" data-i="${i}" transform="translate(${P[i][0]} ${P[i][1]})" aria-label="Step ${i+1}: ${s[0]}"><g class="art">${ART[i]}</g><text class="lbl" y="92" text-anchor="middle">${i+1}. ${s[0]}</text></g>`).join('');
+h+=`<g class="lit"><use id="fly" href="#fork" x="0" y="0" width="62" height="62" opacity="0" style="pointer-events:none"/></g>`;
+h+=`<g class="sbtn" id="startb" role="button" tabindex="0" aria-label="Start"><rect x="90" y="-52" width="120" height="44" rx="22"/><text x="150" y="-24" text-anchor="middle">▶ Start</text></g>`;
+h+=`<g class="sbtn" id="replayb" role="button" tabindex="0" aria-label="Replay" style="display:none"><rect x="805" y="618" width="130" height="44" rx="22"/><text x="870" y="646" text-anchor="middle">↻ Replay</text></g>`;
+$('m').innerHTML=`<g transform="translate(100 0)">${h}</g>`;
+$('ticks').innerHTML='<i></i>'.repeat(S.length);
+// state
+let cur=-1,prev=-1,timer=null,pick=null,anim=null;const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fly(){const f=$('fly'),k=$('fk11'),B='translate(346px,490px)';k.style.opacity=0;f.setAttribute('opacity',1);
+ anim=f.animate([1,.1,1,.1,1,.1,1].map(o=>({transform:B,opacity:o})),{duration:1500});
+ anim.onfinish=()=>{anim=f.animate([{transform:B+' scale(1)'},{transform:'translate(660px,250px) scale(.95)',offset:.5},{transform:'translate(990px,188px) scale(.839)'}],{duration:2600,easing:'ease-in-out',fill:'forwards'});
+  anim.onfinish=()=>{k.style.opacity=1;f.setAttribute('opacity',0);anim.cancel();anim=null}}}
+let shakes=[];
+function shake(){const T=450,o={duration:T,easing:'ease-in-out'};
+ [['shs','gs',2,0,30],['shp','gp',4,2*T+250,-30]].forEach(([sh,g,n,d,deg])=>{
+  shakes.push($(sh).animate([{transform:'rotate(0)'},{transform:`rotate(${deg}deg) translateY(6px)`},{transform:'rotate(0)'}],{...o,iterations:n,delay:d}));
+  shakes.push($(g).animate([{opacity:0},{opacity:1,offset:.5},{opacity:0}],{...o,iterations:n,delay:d}))})}
+function show(){
+ if(anim){anim.cancel();anim=null;$('fly').setAttribute('opacity',0)}
+ shakes.forEach(a=>a.cancel());shakes=[];
+ $('fk7').style.opacity=cur>=11?0:1;$('fk11').style.opacity=cur>=11?1:0;
+ if(cur==11&&prev==10&&!RM)fly();
+ if(cur==10&&prev==9&&!RM)shake();
+ prev=cur;
+ S.forEach((s,i)=>{const n=$('n'+i);n.classList.toggle('lit',i<=cur);n.classList.toggle('now',false);$('sh'+i).classList.toggle('now',i==cur)});
+ if(cur>=0){const n=$('n'+cur);void n.getBoundingClientRect();n.classList.add('now')}
+ E.forEach(([a,b],k)=>$('ed'+k).classList.toggle('on',b<=cur));
+ $('goalg').parentNode.classList.toggle('lit',cur>=9||cur<0);
+ const used=new Set(S.slice(0,cur+1).flatMap(s=>s[2])),now=cur>=0?S[cur][2]:[];
+ IT.forEach(([k])=>{const b=$('it-'+k);b.classList.toggle('lit',cur<0||used.has(k));b.classList.toggle('now',now.includes(k))});
+ $('trk').setAttribute('aria-valuenow',cur+1);
+
+}
+function go(i){cur=i;show()}
+const dwell=i=>RM?2300:i==11?4800:i==10?4200:2300,fill=$('fill');
+function bar(w,ms){fill.style.transition=ms?`width ${ms}ms ease-out`:'none';fill.style.width=w*100+'%'}
+function step(){bar((cur+1)/S.length,200);timer=setTimeout(()=>{if(cur>=S.length-1)return finish();go(cur+1);step()},dwell(cur))}
+function finish(){timer=null;$('replayb').style.display=''}
+function start(){clearTimeout(timer);if(pick){pick=null;document.querySelectorAll('.item').forEach(x=>x.classList.remove('pick'));S.forEach((s,i)=>$('fr'+i).classList.remove('hl'));$('find').textContent='Tap a tool or ingredient to see which steps use it.'}$('startb').style.display='none';$('replayb').style.display='none';bar(0,0);void fill.offsetWidth;prev=-1;go(0);step()}
+for(const id of ['startb','replayb']){const b=$(id);b.addEventListener('click',start);b.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();start()}})}
+$('shelf').onclick=e=>{const b=e.target.closest('.item');if(!b)return;const k=b.dataset.k;pick=pick==k?null:k;
+ document.querySelectorAll('.item').forEach(x=>x.classList.toggle('pick',x.dataset.k==pick));
+ const st=S.map((s,i)=>s[2].includes(pick)?i:-1).filter(i=>i>=0);
+ S.forEach((s,i)=>$('fr'+i).classList.toggle('hl',st.includes(i)));
+ $('find').textContent=pick?`${NM[pick]}: used in step${st.length>1?'s':''} ${st.map(i=>i+1).join(st.length>2?', ':' and ')}.`:'Tap a tool or ingredient to see which steps use it.'};
+show();
+}
+</script>
+</body></html>
